@@ -1,0 +1,134 @@
+<style>
+    body {
+        font-family: "Verdana", sans-serif;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    .header {
+        font-weight: bold;
+        text-align: right;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+        background-color: #f2f2f2;
+        margin-bottom: 20px;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    .text-center{
+        text-align: center;
+    }
+
+</style>
+<h1 class="text-center">This is a list of characters from Rick and Morty!</h1>
+
+{% for character in charactersData.results %}
+    <div class="row">
+        <div class="column">
+
+
+            <table>
+                <tr>
+                    <th class="text-center">Character</th>
+                    <th  class="text-center" colspan="2">Info</th>
+                </tr>
+
+
+                <tr>
+                    <td class="text-center" rowspan="8"><img src="{{ character.image }}" alt="{{ character.name }} avatar"></td>
+                </tr>
+                <tr>
+                    <td class="header">Name:</td>
+                    <td>{{ character.name }}</td>
+                </tr>
+
+                <tr>
+                    <td class="header">Status:</td>
+                    <td>{{ character.status }}</td>
+                </tr>
+                <tr>
+                    <td class="header">Species:</td>
+                    <td>{{ character.species }}</td>
+                </tr>
+                <tr>
+                    <td class="header">Type:</td>
+                    <td>{{ character.type }}</td>
+                </tr>
+                <tr>
+                    <td class="header">Gender:</td>
+                    <td>{{ character.gender }}</td>
+                </tr>
+                <tr>
+                    <td class="header">Origin:</td>
+                    <td>{{ character.origin.name }}</td>
+                </tr>
+                <tr>
+                    <td class="header">Location:</td>
+                    <td>{{ character.location.name }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="column">
+            <table>
+                <tr>
+                    <th class="text-center" colspan="4">Episode appearances</th>
+                </tr>
+
+                <tr>
+                    <th class="text-center" >Name</th>
+                    <th class="text-center">Episode</th>
+                    <th class="text-center">Air date</th>
+                </tr>
+                {% for episodeId in characterEpisodesIdsMap[character.id] %}
+                    <tr>
+                        <td class="text-center">{{ episodesList[episodeId].name }}</td>
+                        <td class="text-center">{{ episodesList[episodeId].episode }}</td>
+                        <td class="text-center">{{ episodesList[episodeId].air_date }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+{% endfor %}
+<div class="text-center">
+    {% if previousUrl is not empty %}
+        <a href="{{ previousUrl }}"> Previous</a>
+    {% endif %}
+    <b>{{ page }}</b>
+    {% if nextUrl is not empty %}
+        <a href="{{ nextUrl }}"> Next</a>
+    {% endif %}
+</div>
+
+

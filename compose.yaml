@@ -1,0 +1,10 @@
+services:
+  server:
+    container_name: rnm
+    build:
+      context: .
+    ports:
+      - 9000:80
+
+    volumes:
+      - ./:/var/www/html:cached
